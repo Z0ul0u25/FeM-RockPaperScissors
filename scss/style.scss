@@ -2,7 +2,7 @@
 
 @font-face {
 	font-family: Barlow;
-	src: url(https://fonts.google.com/specimen/Barlow+Semi+Condensed);
+	src        : url(https://fonts.google.com/specimen/Barlow+Semi+Condensed);
 }
 
 html {
@@ -13,8 +13,8 @@ html {
 }
 
 body {
-	background: linear-gradient($backgroud-gradient);
-	display: flex;
+	background    : linear-gradient($backgroud-gradient);
+	display       : flex;
 	flex-direction: column;
 
 	@media (min-width=600px) {
@@ -23,23 +23,37 @@ body {
 }
 
 header {
-	display: flex;
-	flex-direction: row;
+	display        : flex;
+	flex-direction : row;
 	justify-content: space-between;
+	align-items    : center;
 
-	margin: 4vw;
-	padding: 4vw;
-	border: 3px solid hsl(217, 16%, 45%);
+	margin       : 4vw;
+	padding      : 4vw;
+	border       : 3px solid hsl(217, 16%, 45%);
 	border-radius: 1pc;
 
-	img{
-		width: 33%;
-		height: 33%;
+	img {
+		width : 50%;
+		height: 50%;
 	}
 
-	div{
+	div {
+		//scoreboard
+		display: flex;
+		flex-direction: column;
+		text-align: center;
+
+		border-radius: 0.5pc;
+
 		background: linear-gradient(#fff, #f0f0f0);
+
+		#score {
+			font-size: 2rem;
+			margin   : 0;
+		}
 	}
+
 }
 
 footer {
@@ -75,6 +89,7 @@ footer {
 
 	&.rock {
 		background: linear-gradient($rock-gradient);
+
 		div {
 			background-image: url("../images/icon-rock.svg");
 		}
@@ -90,6 +105,7 @@ footer {
 
 	&.scissors {
 		background: linear-gradient($scissors-gradient);
+
 		div {
 			background-image: url("../images/icon-scissors.svg");
 		}
@@ -97,6 +113,7 @@ footer {
 
 	&.lizard {
 		background: linear-gradient($lizard-gradient);
+
 		div {
 			background-image: url("../images/icon-lizard.svg");
 		}
@@ -104,6 +121,7 @@ footer {
 
 	&.spock {
 		background: linear-gradient($spock-gradient);
+
 		div {
 			background-image: url("../images/icon-spock.svg");
 		}
