@@ -1,0 +1,111 @@
+@import 'variables';
+
+@font-face {
+	font-family: Barlow;
+	src: url(https://fonts.google.com/specimen/Barlow+Semi+Condensed);
+}
+
+html {
+	height    : 100%;
+	box-sizing: border-box;
+
+	font-family: Barlow, sans-serif;
+}
+
+body {
+	background: linear-gradient($backgroud-gradient);
+	display: flex;
+	flex-direction: column;
+
+	@media (min-width=600px) {
+		background: radial-gradient($backgroud-gradient);
+	}
+}
+
+header {
+	display: flex;
+	flex-direction: row;
+	justify-content: space-between;
+
+	margin: 4vw;
+	padding: 4vw;
+	border: 3px solid hsl(217, 16%, 45%);
+	border-radius: 1pc;
+
+	img{
+		width: 33%;
+		height: 33%;
+	}
+
+	div{
+		background: linear-gradient(#fff, #f0f0f0);
+	}
+}
+
+footer {
+
+	margin-top: auto;
+
+	font-size : 11px;
+	text-align: center;
+
+	a {
+		color: hsl(228, 45%, 44%);
+
+	}
+}
+
+.item {
+	width        : 20vw;
+	height       : 20vw;
+	border-radius: 50%;
+	padding      : 4vw;
+
+	div {
+		border-radius: 50%;
+
+		width : 20vw;
+		height: 20vw;
+
+		background-color   : #fff;
+		background-repeat  : no-repeat;
+		background-position: center;
+		background-size    : 50%;
+	}
+
+	&.rock {
+		background: linear-gradient($rock-gradient);
+		div {
+			background-image: url("../images/icon-rock.svg");
+		}
+	}
+
+	&.paper {
+		background: linear-gradient($paper-gradient);
+
+		div {
+			background-image: url("../images/icon-paper.svg");
+		}
+	}
+
+	&.scissors {
+		background: linear-gradient($scissors-gradient);
+		div {
+			background-image: url("../images/icon-scissors.svg");
+		}
+	}
+
+	&.lizard {
+		background: linear-gradient($lizard-gradient);
+		div {
+			background-image: url("../images/icon-lizard.svg");
+		}
+	}
+
+	&.spock {
+		background: linear-gradient($spock-gradient);
+		div {
+			background-image: url("../images/icon-spock.svg");
+		}
+	}
+}
