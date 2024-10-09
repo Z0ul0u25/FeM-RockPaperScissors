@@ -9,6 +9,8 @@
   <link rel="icon" type="image/png" sizes="32x32" href="./images/favicon-32x32.png">
   <link rel="stylesheet" href="./css/style.min.css">
 
+  <script src="./js/rockpaperscissors.js" defer></script>
+
   <title>Frontend Mentor | Rock, Paper, Scissors</title>
 </head>
 
@@ -22,25 +24,23 @@
       </div>
 
   </header>
-  <main>
-
-    <div class="select">
-      <div class="item rock">
-        <div></div>
-      </div>
-      <div class="item paper">
-        <div></div>
-      </div>
-      <div class="item scissors">
-        <div></div>
-      </div>
-      <!-- <div class="item lizard">
-        <div></div>
-      </div>
-      <div class="item spock">
-        <div></div>
-      </div> -->
+  <main class="mode0 nojs">
+    <noscript>Please enable Javascript to play this game</noscript>
+    <div id="board" class="select">
     </div>
+
+    <div id="control">
+      <div>
+        <p>Mode: <span>Normal</span></p>
+      </div>
+      <div>
+        <p>Rules</p>
+      </div>
+      <div class="caution">
+        <p>Reset score</p>
+      </div>
+    </div>
+
   </main>
 
   <footer class="attribution">

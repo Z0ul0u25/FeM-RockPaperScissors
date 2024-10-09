@@ -1,20 +1,31 @@
+@import 'fonts';
+@import 'mixins';
 @import 'variables';
 
-@font-face {
-	font-family: Barlow;
-	src        : url(https://fonts.google.com/specimen/Barlow+Semi+Condensed);
+.nojs{
+	font-size: 2rem;
+	margin:10px;
+	text-align: center;
+	background: linear-gradient(rgb(238, 115, 0), rgb(236, 171, 73));
+	border-radius: 1pc;
+
+	&>:not(:first-child){
+		display: none !important;
+	}
 }
 
 html {
 	height    : 100%;
 	box-sizing: border-box;
 
-	font-family: Barlow, sans-serif;
+	font-family: "Barlow Semi Condensed", sans-serif;
 }
 
 body {
+	height        : 100%;
 	background    : linear-gradient($backgroud-gradient);
 	display       : flex;
+	margin        : 0;
 	flex-direction: column;
 
 	@media (min-width=600px) {
@@ -34,15 +45,16 @@ header {
 	border-radius: 1pc;
 
 	img {
-		width : 50%;
-		height: 50%;
+		width: 33%;
 	}
 
 	div {
 		//scoreboard
-		display: flex;
+		display       : flex;
 		flex-direction: column;
-		text-align: center;
+		text-align    : center;
+		padding       : 16px;
+		min-width     : 100px;
 
 		border-radius: 0.5pc;
 
@@ -52,16 +64,56 @@ header {
 			font-size: 2rem;
 			margin   : 0;
 		}
+
+		p {
+			margin: 0;
+		}
 	}
 
 }
 
+main {
+	&>div:first-of-type {
+		position: relative;
+		height  : 100vw;
+		width   : 100vw;
+
+		background-size    : 60%;
+		background-repeat  : no-repeat;
+		background-position: center;
+	}
+
+	#control{
+		display: flex;
+		justify-content: space-around;
+		flex-direction: row;
+		flex-wrap: wrap;
+		color: #fff;
+
+
+		div{
+			width: 100px;
+			margin : 0 16px;
+			text-align: center;
+			border-radius: 1pc;
+			border: 3px solid #fff;
+		}
+	}
+
+	.item {
+		position: absolute;
+	}
+}
+
 footer {
 
-	margin-top: auto;
+	margin-top   : auto;
+	margin-bottom: 16px;
 
 	font-size : 11px;
 	text-align: center;
+
+	color: #fff;
 
 	a {
 		color: hsl(228, 45%, 44%);
@@ -69,17 +121,16 @@ footer {
 	}
 }
 
+#control .caution{
+	border-color: #d00;
+}
+
 .item {
-	width        : 20vw;
-	height       : 20vw;
 	border-radius: 50%;
 	padding      : 4vw;
 
 	div {
 		border-radius: 50%;
-
-		width : 20vw;
-		height: 20vw;
 
 		background-color   : #fff;
 		background-repeat  : no-repeat;
@@ -125,5 +176,86 @@ footer {
 		div {
 			background-image: url("../images/icon-spock.svg");
 		}
+	}
+}
+
+.mode0 {
+	.select {
+		background-image: url("../images/bg-triangle.svg");
+
+		.item {
+			width : $item-size-mode0;
+			height: $item-size-mode0;
+
+			div {
+				width : $item-size-mode0;
+				height: $item-size-mode0;
+			}
+		}
+	}
+
+	.rock {
+		@include absolute-center;
+		top: 55%;
+	}
+
+	.paper {
+		left: 10%
+	}
+
+	.scissors {
+		right: 10%;
+	}
+
+	.paper,
+	.scissors {
+		top: 10%;
+	}
+}
+
+.mode1 {
+	.select {
+		background-image: url("../images/bg-pentagon.svg");
+
+		.item {
+			width : $item-size-mode1;
+			height: $item-size-mode1;
+
+			div {
+				width : $item-size-mode1;
+				height: $item-size-mode1;
+			}
+		}
+	}
+
+	.rock {
+		right: 15%;
+	}
+
+	.paper {
+		right: 5%;
+	}
+
+	.scissors {
+		@include absolute-center;
+		top: 5%;
+	}
+
+	.lizard {
+		left: 15%;
+	}
+
+	.spock {
+		left: 5%;
+	}
+
+	.rock,
+	.lizard {
+		bottom: 5%;
+	}
+
+	.spock,
+	.paper {
+		top: 30%;
 	}
 }
