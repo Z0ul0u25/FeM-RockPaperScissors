@@ -16,6 +16,13 @@ function updateGameData(){
 }
 
 /**
+ * TODO gameLoop
+ */
+function play(e){
+	console.log(e.currentTarget.data);
+}
+
+/**
  * Add an item to the screen
  * @param {String} itemName Name of the item to add
  */
@@ -23,7 +30,9 @@ function addItem(itemName){
 	let item = document.createElement("div");
 	item.classList.add("item");
 	item.classList.add(itemName);
+	item.data=itemName;
 	item.appendChild(document.createElement("div"));
+	item.addEventListener("click", play, false);
 	board.appendChild(item);
 }
 
@@ -32,7 +41,6 @@ function addItem(itemName){
  * @param {String} itemName Name of the item to remove
  */
 function removeItem(itemName){
-	console.log(board.getElementsByClassName(itemName));
 	board.getElementsByClassName(itemName)[0].remove();
 }
 
@@ -58,11 +66,17 @@ function swapMode(){
 	updateGameData();
 }
 
+/**
+ * TODO Show a rule board according to current mode
+ */
 function showRules(){
 	console.log("RULES");
 	console.log(rulesCheck.checked);
 }
 
+/**
+ * Reset scoreboard to 0-0
+ */
 function resetScore(){
 	for (let i = 0; i < scores.children.length; i++) {
 		scores.children[i].innerHTML = "0";

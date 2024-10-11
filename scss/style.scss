@@ -116,7 +116,7 @@ footer {
 	color          : #fff;
 	user-select: none;
 
-	&>div {
+	&>div, &>label {
 		width        : 100px;
 		margin       : 0 16px;
 		text-align   : center;
