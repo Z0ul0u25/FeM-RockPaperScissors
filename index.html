@@ -16,12 +16,12 @@
 
 <body>
   <header>
-
-      <img src="./images/logo.svg" alt="Rock Paper Scissors Logo">
-      <div>
-        <p>score</p>
-        <p id="score"><span>0</span> - <span>0</span></p>
-      </div>
+    <h1 class="hidden">Rock Paper Scissors</h1>
+    <img src="./images/logo.svg" alt="Rock Paper Scissors Logo">
+    <div>
+      <p>score</p>
+      <p id="score"><span>0</span> - <span>0</span></p>
+    </div>
 
   </header>
   <main class="mode0 nojs">
@@ -29,12 +29,21 @@
     <div id="board" class="select">
     </div>
 
+    <div id="rules">
+
+    </div>
+
     <div id="control">
       <div>
-        <p>Mode: <span>Normal</span></p>
+        <p>Mode: <span id="mode">Normal</span></p>
       </div>
       <div>
-        <p>Rules</p>
+        <label for="showRules">
+          <div>
+            <p>Rules</p>
+          </div>
+        </label>
+        <input type="checkbox" name="showRules" id="showRules" hidden>
       </div>
       <div class="caution">
         <p>Reset score</p>

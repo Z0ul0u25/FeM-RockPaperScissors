@@ -2,7 +2,11 @@
 let gameData = null;
 
 let board = null;
+let scores = null;
+let rules = null;
+let rulesCheck = null;
 let main = null;
+let modeSpan = null;
 
 /**
  * Update de gamedata to localStorage
@@ -39,17 +43,30 @@ function swapMode(){
 	main.classList.remove("mode"+gameData.mode);
 
 	gameData.mode = ++gameData.mode%2;
-	console.log(gameData.mode);
+
 	if (gameData.mode == 0) {
 		removeItem("spock");
 		removeItem("lizard");
+		modeSpan.innerHTML = "Normal";
 	} else {
 		addItem("spock");
 		addItem("lizard");
+		modeSpan.innerHTML = "Special";
 	}
 
 	main.classList.add("mode"+gameData.mode);
 	updateGameData();
+}
+
+function showRules(){
+	console.log("RULES");
+	console.log(rulesCheck.checked);
+}
+
+function resetScore(){
+	for (let i = 0; i < scores.children.length; i++) {
+		scores.children[i].innerHTML = "0";
+	}
 }
 
 /**
@@ -58,7 +75,11 @@ function swapMode(){
 function init(){
 	gameData = JSON.parse(localStorage.getItem('gameData'));
 	board = document.getElementById("board");
+	scores = document.getElementById("score");
+	rules = document.getElementById("rules");
+	rulesCheck = document.getElementById("showRules");
 	main = document.getElementsByTagName("main")[0];
+	modeSpan = document.getElementById("mode");
 
 	addItem("rock");
 	addItem("paper");
@@ -73,10 +94,15 @@ function init(){
 	} else if(gameData.mode == 1) {
 		addItem("lizard");
 		addItem("spock");
+		modeSpan.innerHTML="Special";
+		main.classList.remove("mode0");
+		main.classList.add("mode1");
 	}
 
 	let control = document.getElementById("control");
 	control.children[0].addEventListener("click", swapMode, false);
+	rulesCheck.addEventListener("change", showRules, false);
+	control.children[2].addEventListener("click", resetScore, false);
 
 	document.getElementsByClassName('nojs')[0].classList.remove("nojs");
 }
