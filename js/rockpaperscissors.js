@@ -10,20 +10,14 @@ let btnCloseRules = null;
 let main = null;
 let modeSpan = null;
 
-const ruleSet = {
-	0: [
-		[0, 1, -1],
-		[-1, 0, 1],
-		[1, -1, 0]
-	],
-	1: [
-		[0, 1, -1, -1, 1],
-		[-1, 0, 1, 1, -1],
-		[1, -1, 0, -1, 1],
-		[1, -1, 1, 0, -1],
-		[-1, 1, -1, 1, 0]
-	]
-};
+const itemOptions = ["rock", "paper", "scissors", "lizard", "spock"];
+const ruleSet = [
+	[0, -1, 1, 1, -1],
+	[1, 0, -1, -1, 1],
+	[-1, 1, 0, 1, -1],
+	[-1, 1, -1, 0, 1],
+	[1, -1, 1, -1, 0]
+];
 
 /**
  * Update de gamedata to localStorage
@@ -36,7 +30,11 @@ function updateGameData() {
  * TODO gameLoop
  */
 function play(e) {
-	console.log(e.currentTarget.data);
+	let playerChoice = itemOptions.indexOf(e.currentTarget.data);
+	let cpuChoice = Math.floor(Math.random() * ((gameData.mode == 0) ? 3 : 5));
+	console.log("You", playerChoice, itemOptions[playerChoice]);
+	console.log("computer", cpuChoice, itemOptions[cpuChoice]);
+	console.log("Outcome", ruleSet[playerChoice][cpuChoice]);
 }
 
 /**
