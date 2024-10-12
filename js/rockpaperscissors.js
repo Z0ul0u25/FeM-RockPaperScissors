@@ -21,7 +21,7 @@ const ruleSet = {
 		[1, -1, 1, 0, -1],
 		[-1, 1, -1, 1, 0]
 	]
-}
+};
 
 /**
  * Update de gamedata to localStorage
