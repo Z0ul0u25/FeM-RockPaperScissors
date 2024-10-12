@@ -8,17 +8,32 @@ let rulesCheck = null;
 let main = null;
 let modeSpan = null;
 
+const ruleSet = {
+	0: [
+		[0, 1, -1],
+		[-1, 0, 1],
+		[1, -1, 0]
+	],
+	1: [
+		[0, 1, -1, -1, 1],
+		[-1, 0, 1, 1, -1],
+		[1, -1, 0, -1, 1],
+		[1, -1, 1, 0, -1],
+		[-1, 1, -1, 1, 0]
+	]
+}
+
 /**
  * Update de gamedata to localStorage
  */
-function updateGameData(){
+function updateGameData() {
 	localStorage.setItem('gameData', JSON.stringify(gameData));
 }
 
 /**
  * TODO gameLoop
  */
-function play(e){
+function play(e) {
 	console.log(e.currentTarget.data);
 }
 
@@ -26,11 +41,11 @@ function play(e){
  * Add an item to the screen
  * @param {String} itemName Name of the item to add
  */
-function addItem(itemName){
+function addItem(itemName) {
 	let item = document.createElement("div");
 	item.classList.add("item");
 	item.classList.add(itemName);
-	item.data=itemName;
+	item.data = itemName;
 	item.appendChild(document.createElement("div"));
 	item.addEventListener("click", play, false);
 	board.appendChild(item);
@@ -40,17 +55,17 @@ function addItem(itemName){
  * Remove an item from the screen
  * @param {String} itemName Name of the item to remove
  */
-function removeItem(itemName){
+function removeItem(itemName) {
 	board.getElementsByClassName(itemName)[0].remove();
 }
 
 /**
  *
  */
-function swapMode(){
-	main.classList.remove("mode"+gameData.mode);
+function swapMode() {
+	main.classList.remove("mode" + gameData.mode);
 
-	gameData.mode = ++gameData.mode%2;
+	gameData.mode = ++gameData.mode % 2;
 
 	if (gameData.mode == 0) {
 		removeItem("spock");
@@ -62,14 +77,14 @@ function swapMode(){
 		modeSpan.innerHTML = "Special";
 	}
 
-	main.classList.add("mode"+gameData.mode);
+	main.classList.add("mode" + gameData.mode);
 	updateGameData();
 }
 
 /**
  * TODO Show a rule board according to current mode
  */
-function showRules(){
+function showRules() {
 	console.log("RULES");
 	console.log(rulesCheck.checked);
 }
@@ -77,7 +92,7 @@ function showRules(){
 /**
  * Reset scoreboard to 0-0
  */
-function resetScore(){
+function resetScore() {
 	for (let i = 0; i < scores.children.length; i++) {
 		scores.children[i].innerHTML = "0";
 	}
@@ -86,7 +101,7 @@ function resetScore(){
 /**
  * Called to initialise components when page has finish loaded
  */
-function init(){
+function init() {
 	gameData = JSON.parse(localStorage.getItem('gameData'));
 	board = document.getElementById("board");
 	scores = document.getElementById("score");
@@ -99,16 +114,16 @@ function init(){
 	addItem("paper");
 	addItem("scissors");
 
-	if (gameData == null){
+	if (gameData == null) {
 		gameData = {};
 		console.log("setting gameDate");
 		gameData.mode = 0;
-		gameData.score = [0,0];
+		gameData.score = [0, 0];
 		updateGameData();
-	} else if(gameData.mode == 1) {
+	} else if (gameData.mode == 1) {
 		addItem("lizard");
 		addItem("spock");
-		modeSpan.innerHTML="Special";
+		modeSpan.innerHTML = "Special";
 		main.classList.remove("mode0");
 		main.classList.add("mode1");
 	}
