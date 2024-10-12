@@ -19,6 +19,7 @@ html {
 	box-sizing: border-box;
 
 	font-family: "Barlow Semi Condensed", sans-serif;
+	font-weight: 600;
 }
 
 body {
@@ -104,39 +105,39 @@ footer {
 	}
 }
 
-#rules{
-	width: 100vw;
+#rules {
+	width : 100vw;
 	height: 100vh;
 
-	display: flex;
-	flex-direction: column;
-	text-align: center;
+	display        : flex;
+	flex-direction : column;
+	text-align     : center;
 	justify-content: space-around;
-	align-items: center;
+	align-items    : center;
 
 
 	background-color: #fff;
-	position: fixed;
-	top: -100%;
+	position        : fixed;
+	top             : -100%;
 
-	&.open{
-		top:0;
+	&.open {
+		top: 0;
 	}
 
 	transition: ease-in-out 0.4s;
 
-	svg{
+	svg {
 		max-width: 90vw;
 	}
 
-	#closeRules{
+	#closeRules {
 		height: 50px;
-		width: 50px;
+		width : 50px;
 
-		background-image: url("../images/icon-close.svg");
-		background-repeat: no-repeat;
+		background-image   : url("../images/icon-close.svg");
+		background-repeat  : no-repeat;
 		background-position: center;
-		background-size: 50%;
+		background-size    : 50%;
 
 		cursor: pointer;
 	}
@@ -148,9 +149,10 @@ footer {
 	flex-direction : row;
 	flex-wrap      : wrap;
 	color          : #fff;
-	user-select: none;
+	user-select    : none;
 
-	&>div, &>label {
+	&>div,
+	&>label {
 		width        : 100px;
 		margin       : 0 16px;
 		text-align   : center;
@@ -163,6 +165,43 @@ footer {
 			border-color: #d00;
 		}
 	}
+}
+
+#board {
+	&.result {
+		background-size: 0;
+		display        : flex;
+		justify-content: space-evenly;
+		align-items: center;
+
+		.item {
+			position: unset;
+			width   : $item-size-selected;
+			height  : $item-size-selected;
+
+			div {
+				height: 100%;
+			}
+		}
+
+		&>div:first-child::after {
+			content: "YOU PICKED";
+		}
+
+		&>div:last-child::after{
+			content: "HOUSE PICKED";
+		}
+
+		&>div{
+			text-align: center;
+			&::after{
+				display: block;
+				margin-top: 20px;
+				color:#fff;
+			}
+		}
+	}
+
 }
 
 .item {
@@ -225,6 +264,10 @@ footer {
 }
 
 .mode0 {
+	#board {
+		background-size: default;
+	}
+
 	.select {
 		background-image: url("../images/bg-triangle.svg");
 
@@ -237,24 +280,24 @@ footer {
 				height: $item-size-mode0;
 			}
 		}
-	}
 
-	.rock {
-		@include absolute-center;
-		top: 55%;
-	}
+		.rock {
+			@include absolute-center;
+			top: 55%;
+		}
 
-	.paper {
-		left: 10%
-	}
+		.paper {
+			left: 10%
+		}
 
-	.scissors {
-		right: 10%;
-	}
+		.scissors {
+			right: 10%;
+		}
 
-	.paper,
-	.scissors {
-		top: 10%;
+		.paper,
+		.scissors {
+			top: 10%;
+		}
 	}
 }
 
@@ -271,44 +314,44 @@ footer {
 				height: $item-size-mode1;
 			}
 		}
-	}
 
-	.rock {
-		right: 15%;
-	}
+		.rock {
+			right: 15%;
+		}
 
-	.paper {
-		right: 5%;
-	}
+		.paper {
+			right: 5%;
+		}
 
-	.scissors {
-		@include absolute-center;
-		top: 5%;
-	}
+		.scissors {
+			@include absolute-center;
+			top: 5%;
+		}
 
-	.lizard {
-		left: 15%;
-	}
+		.lizard {
+			left: 15%;
+		}
 
-	.spock {
-		left: 5%;
-	}
+		.spock {
+			left: 5%;
+		}
 
-	.rock,
-	.lizard {
-		bottom: 5%;
-	}
+		.rock,
+		.lizard {
+			bottom: 5%;
+		}
 
-	.spock,
-	.paper {
-		top: 30%;
+		.spock,
+		.paper {
+			top: 30%;
+		}
 	}
 }
 
-.hidden{
-	display: none;
+.hidden {
+	display   : none;
 	visibility: hidden;
-	height: 0;
-	width: 0;
-	font-size: 0;
+	height    : 0;
+	width     : 0;
+	font-size : 0;
 }

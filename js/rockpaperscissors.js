@@ -36,25 +36,6 @@ function updateScoreboard() {
 	}
 }
 
-/**
- * TODO gameLoop
- */
-function play(e) {
-	let playerChoice = itemOptions.indexOf(e.currentTarget.data);
-	let cpuChoice = Math.floor(Math.random() * ((gameData.mode == 0) ? 3 : 5));
-	console.log("You", playerChoice, itemOptions[playerChoice]);
-	console.log("computer", cpuChoice, itemOptions[cpuChoice]);
-	let result = ruleSet[playerChoice][cpuChoice];
-	console.log("Outcome", result);
-
-	if (result == 1) {
-		gameData.score[0]++;
-	} else if (result == -1) {
-		gameData.score[1]++;
-	}
-
-	updateScoreboard();
-}
 
 /**
  * Add an item to the screen
@@ -68,6 +49,44 @@ function addItem(itemName) {
 	item.appendChild(document.createElement("div"));
 	item.addEventListener("click", play, false);
 	board.appendChild(item);
+}
+
+/**
+ * TODO gameLoop
+ */
+function play(e) {
+	let playerChoice = itemOptions.indexOf(e.currentTarget.data);
+	let cpuChoice = Math.floor(Math.random() * ((gameData.mode == 0) ? 3 : 5));
+	let result = ruleSet[playerChoice][cpuChoice];
+	console.log("You", playerChoice, itemOptions[playerChoice]);
+	console.log("computer", cpuChoice, itemOptions[cpuChoice]);
+	console.log("Outcome", result);
+
+	let boardItems = board.children;
+	while (boardItems.length != 1) {
+		/*
+		* TODO: Find a proper fix to this bug
+		* "Why does it need a while loop" you may ask
+		* Well you see, without it, some item are left on display.
+		*/
+		for (const item of boardItems) {
+			if (item != e.currentTarget) {
+				item.remove();
+			}
+		}
+	}
+
+	board.classList="result";
+
+	addItem(itemOptions[cpuChoice]);
+
+	if (result == 1) {
+		gameData.score[0]++;
+	} else if (result == -1) {
+		gameData.score[1]++;
+	}
+
+	updateScoreboard();
 }
 
 /**
@@ -117,7 +136,7 @@ function showRules() {
  * uncheck hidden box to close rules
  */
 function closeRules() {
-	console.log("close rules")
+	console.log("close rules");
 	rulesCheck.checked = false;
 	showRules();
 }
