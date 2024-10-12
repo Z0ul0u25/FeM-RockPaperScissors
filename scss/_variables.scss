@@ -17,6 +17,6 @@ $spock-gradient : to top,
 hsl(189, 59%, 53%),
 hsl(189, 58%, 57%);
 
-$item-size-mode0: 25vw;
-$item-size-mode1: 20vw;
-$item-size-selected : 30vw;
+$item-size-mode0: min(25vw, 15vh);
+$item-size-mode1: min(20vw, 12vh);
+$item-size-selected : min(30vw, 18vh);

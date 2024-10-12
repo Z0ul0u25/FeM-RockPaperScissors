@@ -23,6 +23,7 @@ html {
 }
 
 body {
+	align-items: center;
 	height        : 100%;
 	background    : linear-gradient($backgroud-gradient);
 	display       : flex;
@@ -35,13 +36,16 @@ body {
 }
 
 header {
+	width: 90%;
+	max-width: 700px;
+
 	display        : flex;
 	flex-direction : row;
 	justify-content: space-between;
 	align-items    : center;
 
-	margin       : 4vw;
-	padding      : 4vw;
+	margin       : min(4vw, 20px);
+	padding      : min(4vw, 20px);
 	border       : 3px solid hsl(217, 16%, 45%);
 	border-radius: 1pc;
 
@@ -74,10 +78,22 @@ header {
 }
 
 main {
+	display: flex;
+	flex-direction: column;
+	justify-content: space-between;
+	flex-grow: 1;
+	align-items: center;
+	width: fit-content;
+
 	&>div:first-of-type {
+		// board
 		position: relative;
-		height  : 100vw;
-		width   : 100vw;
+
+		width: min(100vw, 60vh);
+		max-width: min(100vw, 70vh);
+		max-height: min(100vw, 70vh);
+
+		aspect-ratio: 1/1;
 
 		background-size    : 60%;
 		background-repeat  : no-repeat;
@@ -91,7 +107,7 @@ main {
 
 footer {
 
-	margin-top   : auto;
+	margin-top   : 16px;
 	margin-bottom: 16px;
 
 	font-size : 11px;
@@ -106,8 +122,8 @@ footer {
 }
 
 #rules {
-	width : 100vw;
-	height: 100vh;
+	width : 100%;
+	height: 100%;
 
 	display        : flex;
 	flex-direction : column;
@@ -206,14 +222,20 @@ footer {
 
 .item {
 
+	max-width: 120px;
+	max-height: 120px;
+
 	border-radius: 50%;
-	padding      : 4vw;
+	padding      : min(4vw, 15px);
 
 	&:hover {
 		cursor: pointer;
 	}
 
 	div {
+		max-width: 120px;
+		max-height: 120px;
+
 		border-radius: 50%;
 
 		background-color   : #fff;
