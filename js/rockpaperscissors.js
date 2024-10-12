@@ -27,6 +27,16 @@ function updateGameData() {
 }
 
 /**
+ * Update score display
+ */
+function updateScoreboard() {
+	updateGameData();
+	for (let i = 0; i < gameData.score.length; i++) {
+		scores.children[i].innerHTML = gameData.score[i];
+	}
+}
+
+/**
  * TODO gameLoop
  */
 function play(e) {
@@ -34,7 +44,16 @@ function play(e) {
 	let cpuChoice = Math.floor(Math.random() * ((gameData.mode == 0) ? 3 : 5));
 	console.log("You", playerChoice, itemOptions[playerChoice]);
 	console.log("computer", cpuChoice, itemOptions[cpuChoice]);
-	console.log("Outcome", ruleSet[playerChoice][cpuChoice]);
+	let result = ruleSet[playerChoice][cpuChoice];
+	console.log("Outcome", result);
+
+	if (result == 1) {
+		gameData.score[0]++;
+	} else if (result == -1) {
+		gameData.score[1]++;
+	}
+
+	updateScoreboard();
 }
 
 /**
@@ -110,7 +129,9 @@ function closeRules() {
 function resetScore() {
 	for (let i = 0; i < scores.children.length; i++) {
 		scores.children[i].innerHTML = "0";
+		gameData.score[i] = 0;
 	}
+	updateGameData();
 }
 
 /**
@@ -136,23 +157,28 @@ function init() {
 		gameData.mode = 0;
 		gameData.score = [0, 0];
 		updateGameData();
-	} else if (gameData.mode == 1) {
-		addItem("lizard");
-		addItem("spock");
+	} else {
 
-		ruleSprite.setAttribute("viewBox", "0 0 340 330");
-		ruleSprite.children[0].setAttribute("href", "./images/rules-sprites.svg#mode1");
+		if (gameData.mode == 1) {
+			addItem("lizard");
+			addItem("spock");
 
-		modeSpan.innerHTML = "Special";
-		main.classList.remove("mode0");
-		main.classList.add("mode1");
+			ruleSprite.setAttribute("viewBox", "0 0 340 330");
+			ruleSprite.children[0].setAttribute("href", "./images/rules-sprites.svg#mode1");
+
+			modeSpan.innerHTML = "Special";
+			main.classList.remove("mode0");
+			main.classList.add("mode1");
+		}
+
+		updateScoreboard();
 	}
 
 	let control = document.getElementById("control");
 	control.children[0].addEventListener("click", swapMode, false);
 	rulesCheck.addEventListener("change", showRules, false);
 	btnCloseRules.addEventListener("click", closeRules, false);
-	control.children[2].addEventListener("click", resetScore, false);
+	control.children[3].addEventListener("click", resetScore, false);
 
 	document.getElementsByClassName('nojs')[0].classList.remove("nojs");
 }
