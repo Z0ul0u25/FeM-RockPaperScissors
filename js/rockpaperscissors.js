@@ -4,7 +4,9 @@ let gameData = null;
 let board = null;
 let scores = null;
 let rules = null;
+let ruleSprite = null;
 let rulesCheck = null;
+let btnCloseRules = null;
 let main = null;
 let modeSpan = null;
 
@@ -60,7 +62,7 @@ function removeItem(itemName) {
 }
 
 /**
- *
+ * Swap between game mode
  */
 function swapMode() {
 	main.classList.remove("mode" + gameData.mode);
@@ -71,10 +73,16 @@ function swapMode() {
 		removeItem("spock");
 		removeItem("lizard");
 		modeSpan.innerHTML = "Normal";
+
+		ruleSprite.setAttribute("viewBox", "0 0 304 270");
+		ruleSprite.children[0].setAttribute("href", "./images/rules-sprites.svg#mode0");
 	} else {
 		addItem("spock");
 		addItem("lizard");
 		modeSpan.innerHTML = "Special";
+
+		ruleSprite.setAttribute("viewBox", "0 0 340 330");
+		ruleSprite.children[0].setAttribute("href", "./images/rules-sprites.svg#mode1");
 	}
 
 	main.classList.add("mode" + gameData.mode);
@@ -82,12 +90,21 @@ function swapMode() {
 }
 
 /**
- * TODO Show a rule board according to current mode
+ * show/hide rule page
  */
 function showRules() {
-	console.log("RULES");
-	console.log(rulesCheck.checked);
+	rules.classList = (rulesCheck.checked) ? "open" : "closed";
 }
+
+/**
+ * uncheck hidden box to close rules
+ */
+function closeRules() {
+	console.log("close rules")
+	rulesCheck.checked = false;
+	showRules();
+}
+
 
 /**
  * Reset scoreboard to 0-0
@@ -106,7 +123,9 @@ function init() {
 	board = document.getElementById("board");
 	scores = document.getElementById("score");
 	rules = document.getElementById("rules");
+	ruleSprite = document.getElementById("ruleSprite");
 	rulesCheck = document.getElementById("showRules");
+	btnCloseRules = document.getElementById("closeRules");
 	main = document.getElementsByTagName("main")[0];
 	modeSpan = document.getElementById("mode");
 
@@ -116,13 +135,16 @@ function init() {
 
 	if (gameData == null) {
 		gameData = {};
-		console.log("setting gameDate");
 		gameData.mode = 0;
 		gameData.score = [0, 0];
 		updateGameData();
 	} else if (gameData.mode == 1) {
 		addItem("lizard");
 		addItem("spock");
+
+		ruleSprite.setAttribute("viewBox", "0 0 340 330");
+		ruleSprite.children[0].setAttribute("href", "./images/rules-sprites.svg#mode1");
+
 		modeSpan.innerHTML = "Special";
 		main.classList.remove("mode0");
 		main.classList.add("mode1");
@@ -131,6 +153,7 @@ function init() {
 	let control = document.getElementById("control");
 	control.children[0].addEventListener("click", swapMode, false);
 	rulesCheck.addEventListener("change", showRules, false);
+	btnCloseRules.addEventListener("click", closeRules, false);
 	control.children[2].addEventListener("click", resetScore, false);
 
 	document.getElementsByClassName('nojs')[0].classList.remove("nojs");

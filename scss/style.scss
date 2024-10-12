@@ -105,7 +105,41 @@ footer {
 }
 
 #rules{
+	width: 100vw;
+	height: 100vh;
 
+	display: flex;
+	flex-direction: column;
+	text-align: center;
+	justify-content: space-around;
+	align-items: center;
+
+
+	background-color: #fff;
+	position: fixed;
+	top: -100%;
+
+	&.open{
+		top:0;
+	}
+
+	transition: ease-in-out 0.4s;
+
+	svg{
+		max-width: 90vw;
+	}
+
+	#closeRules{
+		height: 50px;
+		width: 50px;
+
+		background-image: url("../images/icon-close.svg");
+		background-repeat: no-repeat;
+		background-position: center;
+		background-size: 50%;
+
+		cursor: pointer;
+	}
 }
 
 #control {
