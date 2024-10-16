@@ -26,8 +26,6 @@
   </header>
   <main class="mode0 nojs">
     <noscript>Please enable Javascript to play this game</noscript>
-    <div id="board" class="select">
-    </div>
 
     <div id="rules" class="">
       <h2>RULES</h2>
@@ -39,17 +37,28 @@
       </div>
     </div>
 
+    <div id="board" class="select">
+    </div>
+
+    <div id="result" class="hidden">
+      <p></p>
+      <div role="button">
+        <p>PLAY AGAIN</p>
+      </div>
+    </div>
+
+
     <div id="control">
-      <div role="button" tabindex="5">
+      <div role="button" tabindex="6">
         <p>Mode: <span id="mode">Normal</span></p>
       </div>
-      <label for="showRules" role="button" aria-haspopup="dialog" tabindex="6">
+      <label for="showRules" role="button" aria-haspopup="dialog" tabindex="7">
         <div>
           <p>Rules</p>
         </div>
       </label>
       <input type="checkbox" name="showRules" id="showRules" hidden>
-      <div class="caution" role="button" tabindex="7">
+      <div class="caution" role="button" tabindex="8">
         <p>Reset score</p>
       </div>
     </div>

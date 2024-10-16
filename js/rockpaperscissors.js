@@ -1,16 +1,17 @@
 "use strict";
 let gameData = null;
 
-let board = null;
-let scores = null;
-let rules = null;
-let ruleSprite = null;
+let divBoard = null;
+let divScores = null;
+let divResult = null;
+let divRules = null;
+let svgRuleSprite = null;
 let rulesCheck = null;
 let btnCloseRules = null;
 let main = null;
 let modeSpan = null;
 
-const itemOptions = ["rock", "paper", "scissors", "lizard", "spock"];
+const ITEM_OPTIONS = ["rock", "paper", "scissors", "lizard", "spock"];
 /**
  * Rule set representation:
  * [playerChoice][cpuChoice]
@@ -28,13 +29,19 @@ const itemOptions = ["rock", "paper", "scissors", "lizard", "spock"];
  * 0 => tie
  * -1 => cpu win
  */
-const ruleSet = [
+const RULE_SET = [
 	[0, -1, 1, 1, -1],
 	[1, 0, -1, -1, 1],
 	[-1, 1, 0, 1, -1],
 	[-1, 1, -1, 0, 1],
 	[1, -1, 1, -1, 0]
 ];
+
+const RESULT_FEEDBACK = {
+	"-1":"YOU LOSE",
+	"0":"TIE",
+	"1":"YOU WIN"
+};
 
 /**
  * Update de gamedata to localStorage
@@ -49,7 +56,7 @@ function updateGameData() {
 function updateScoreboard() {
 	updateGameData();
 	for (let i = 0; i < gameData.score.length; i++) {
-		scores.children[i].innerHTML = gameData.score[i];
+		divScores.children[i].innerHTML = gameData.score[i];
 	}
 }
 
@@ -68,23 +75,29 @@ function addItem(itemName, canClick) {
 		item.addEventListener("click", play, false);
 		item.addEventListener("keypress", play, false);
 		item.classList.add("playable");
-		item.tabIndex = board.children.length + 1;
+		item.tabIndex = divBoard.children.length + 1;
 	}
 
 	item.appendChild(document.createElement("div"));
-	board.appendChild(item);
+	divBoard.appendChild(item);
 }
 
 /**
  * Reset the board after a play
+ * @param {Event} e Event trigegr
+ * @returns null if trigger is invalid
  */
-function resetBoard() {
-
-	while(board.children.length > 0){
-		board.children[0].remove();
+function resetBoard(e = null) {
+	if (e != null && e.type == "keypress" && e.code != "Enter") {
+		return null;
 	}
 
-	board.classList="select";
+	while(divBoard.children.length > 0){
+		divBoard.children[0].remove();
+	}
+
+	divBoard.classList="select";
+	divResult.classList.add("hidden");
 
 	addItem("rock", true);
 	addItem("paper", true);
@@ -94,13 +107,15 @@ function resetBoard() {
 		addItem("spock", true);
 		addItem("lizard", true);
 
-		ruleSprite.setAttribute("viewBox", "0 0 340 330");
-		ruleSprite.children[0].setAttribute("href", "./images/rules-sprites.svg#mode1");
+		svgRuleSprite.setAttribute("viewBox", "0 0 340 330");
+		svgRuleSprite.children[0].setAttribute("href", "./images/rules-sprites.svg#mode1");
 
 		modeSpan.innerHTML = "Special";
 		main.classList.remove("mode0");
 		main.classList.add("mode1");
 	}
+
+	// divBoard.getElementsByClassName("rock")[0].focus();
 }
 
 /**
@@ -113,14 +128,18 @@ function play(e) {
 		return null;
 	}
 
-	let playerChoice = itemOptions.indexOf(e.currentTarget.data);
+	let playerChoice = ITEM_OPTIONS.indexOf(e.currentTarget.data);
 	let cpuChoice = Math.floor(Math.random() * ((gameData.mode == 0) ? 3 : 5));
-	let result = ruleSet[playerChoice][cpuChoice];
+	let result = RULE_SET[playerChoice][cpuChoice];
 
 	e.currentTarget.removeEventListener("click", play);
+	e.currentTarget.removeAttribute("tabindex");
 	e.currentTarget.classList.remove("playable");
 
-	let boardItems = board.children;
+	divResult.children[1].tabIndex = 1;
+	divResult.children[1].focus();
+
+	let boardItems = divBoard.children;
 	while (boardItems.length != 1) {
 		/*
 		* TODO: Find a proper fix to this bug
@@ -134,9 +153,9 @@ function play(e) {
 		}
 	}
 
-	board.classList = "result";
+	divBoard.classList = "result";
 
-	addItem(itemOptions[cpuChoice], false);
+	addItem(ITEM_OPTIONS[cpuChoice], false);
 
 	if (result == 1) {
 		gameData.score[0]++;
@@ -146,9 +165,10 @@ function play(e) {
 
 	updateScoreboard();
 
+	divResult.classList.remove("hidden");
+	divResult.children[0].innerHTML = RESULT_FEEDBACK[result];
 
-
-	setTimeout(resetBoard, 1000);
+	// setTimeout(resetBoard, 1000);
 }
 
 /**
@@ -156,14 +176,14 @@ function play(e) {
  * @param {String} itemName Name of the item to remove
  */
 function removeItem(itemName) {
-	board.getElementsByClassName(itemName)[0].remove();
+	divBoard.getElementsByClassName(itemName)[0].remove();
 }
 
 /**
  * Swap between game mode
  */
 function swapMode() {
-	if (board.classList.contains("select")) {
+	if (divBoard.classList.contains("select")) {
 		main.classList.remove("mode" + gameData.mode);
 
 		// Loop gamemode to 0 if was at 1
@@ -174,15 +194,15 @@ function swapMode() {
 			removeItem("lizard");
 			modeSpan.innerHTML = "Normal";
 
-			ruleSprite.setAttribute("viewBox", "0 0 304 270");
-			ruleSprite.children[0].setAttribute("href", "./images/rules-sprites.svg#mode0");
+			svgRuleSprite.setAttribute("viewBox", "0 0 304 270");
+			svgRuleSprite.children[0].setAttribute("href", "./images/rules-sprites.svg#mode0");
 		} else {
 			addItem("spock", true);
 			addItem("lizard", true);
 			modeSpan.innerHTML = "Special";
 
-			ruleSprite.setAttribute("viewBox", "0 0 340 330");
-			ruleSprite.children[0].setAttribute("href", "./images/rules-sprites.svg#mode1");
+			svgRuleSprite.setAttribute("viewBox", "0 0 340 330");
+			svgRuleSprite.children[0].setAttribute("href", "./images/rules-sprites.svg#mode1");
 		}
 
 		main.classList.add("mode" + gameData.mode);
@@ -194,7 +214,7 @@ function swapMode() {
  * show/hide rule page
  */
 function showRules() {
-	rules.classList = (rulesCheck.checked) ? "open" : "closed";
+	divRules.classList = (rulesCheck.checked) ? "open" : "closed";
 }
 
 /**
@@ -210,8 +230,8 @@ function closeRules() {
  * Reset scoreboard to 0-0
  */
 function resetScore() {
-	for (let i = 0; i < scores.children.length; i++) {
-		scores.children[i].innerHTML = "0";
+	for (let i = 0; i < divScores.children.length; i++) {
+		divScores.children[i].innerHTML = "0";
 		gameData.score[i] = 0;
 	}
 	updateGameData();
@@ -222,10 +242,11 @@ function resetScore() {
  */
 function init() {
 	gameData = JSON.parse(localStorage.getItem('gameData'));
-	board = document.getElementById("board");
-	scores = document.getElementById("score");
-	rules = document.getElementById("rules");
-	ruleSprite = document.getElementById("ruleSprite");
+	divBoard = document.getElementById("board");
+	divResult = document.getElementById("result");
+	divScores = document.getElementById("score");
+	divRules = document.getElementById("rules");
+	svgRuleSprite = document.getElementById("ruleSprite");
 	rulesCheck = document.getElementById("showRules");
 	btnCloseRules = document.getElementById("closeRules");
 	main = document.getElementsByTagName("main")[0];
@@ -246,6 +267,8 @@ function init() {
 	rulesCheck.addEventListener("change", showRules, false);
 	btnCloseRules.addEventListener("click", closeRules, false);
 	control.children[3].addEventListener("click", resetScore, false);
+	divResult.children[1].addEventListener("click", resetBoard, false);
+	divResult.children[1].addEventListener("keypress", resetBoard, false);
 
 	document.getElementsByClassName('nojs')[0].classList.remove("nojs");
 }

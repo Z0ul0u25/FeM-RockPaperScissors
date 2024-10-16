@@ -2,6 +2,8 @@
 @import 'mixins';
 @import 'variables';
 
+
+
 .nojs {
 	font-size    : 2rem;
 	margin       : 10px;
@@ -85,8 +87,7 @@ main {
 	align-items: center;
 	width: fit-content;
 
-	&>div:first-of-type {
-		// board
+	#board {
 		position: relative;
 
 		width: min(100vw, 60vh);
@@ -165,27 +166,7 @@ footer {
 }
 
 #control {
-	display        : flex;
-	justify-content: space-around;
-	flex-direction : row;
-	flex-wrap      : wrap;
-	color          : #fff;
-	user-select    : none;
-
-	&>div,
-	&>label {
-		width        : 100px;
-		margin       : 0 16px;
-		text-align   : center;
-		border-radius: 1pc;
-		border       : 3px solid #fff;
-
-		cursor: pointer;
-
-		&.caution {
-			border-color: #d00;
-		}
-	}
+	@include button-primary
 }
 
 #board {
@@ -194,6 +175,9 @@ footer {
 		display        : flex;
 		justify-content: space-evenly;
 		align-items: center;
+
+		max-height: calc($item-size-selected *2);
+		// aspect-ratio: unset;
 
 		.item {
 			position: unset;
@@ -225,6 +209,22 @@ footer {
 
 }
 
+#result{
+	min-width: min(50vw, 300px);
+	padding: 0 0 8vh;
+	text-align: center;
+	>p{
+		color: #fff;
+		font-size: 4rem;
+		margin: 1rem 0;
+	}
+
+	div{
+		@include button-secondary;
+		border-radius: 1pc;
+	}
+}
+
 .item {
 
 	max-width: 120px;
@@ -247,6 +247,7 @@ footer {
 
 	&.rock {
 		background: linear-gradient($rock-gradient);
+		box-shadow: 0 8px darken($rock-colour, 16);
 
 		div {
 			background-image: url("../images/icon-rock.svg");
@@ -255,6 +256,7 @@ footer {
 
 	&.paper {
 		background: linear-gradient($paper-gradient);
+		box-shadow: 0 8px darken($paper-colour, 16);
 
 		div {
 			background-image: url("../images/icon-paper.svg");
@@ -263,6 +265,7 @@ footer {
 
 	&.scissors {
 		background: linear-gradient($scissors-gradient);
+		box-shadow: 0 8px darken($scissors-colour, 16);
 
 		div {
 			background-image: url("../images/icon-scissors.svg");
@@ -271,6 +274,7 @@ footer {
 
 	&.lizard {
 		background: linear-gradient($lizard-gradient);
+		box-shadow: 0 8px darken($lizard-colour, 16);
 
 		div {
 			background-image: url("../images/icon-lizard.svg");
@@ -279,6 +283,7 @@ footer {
 
 	&.spock {
 		background: linear-gradient($spock-gradient);
+		box-shadow: 0 8px darken($spock-colour, 16);
 
 		div {
 			background-image: url("../images/icon-spock.svg");

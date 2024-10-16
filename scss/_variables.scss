@@ -1,22 +1,28 @@
 $backgroud-gradient :hsl(214, 47%, 23%),
 hsl(237, 49%, 15%);
 
-$rock-gradient: to top,
-hsl(349, 71%, 52%),
+$rock-colour     : hsl(349, 71%, 52%);
+$paper-colour    : hsl(230, 89%, 62%);
+$scissors-colour : hsl(39, 89%, 49%);
+$lizard-colour   : hsl(261, 73%, 60%);
+$spock-colour    : hsl(189, 59%, 53%);
+
+$rock-gradient : to top,
+$rock-colour,
 hsl(349, 70%, 56%);
-$paper-gradient: to top,
-hsl(230, 89%, 62%),
+$paper-gradient : to top,
+$paper-colour,
 hsl(230, 89%, 65%);
 $scissors-gradient : to top,
-hsl(39, 89%, 49%),
+$scissors-colour,
 hsl(40, 84%, 53%);
 $lizard-gradient : to top,
-hsl(261, 73%, 60%),
+$lizard-colour,
 hsl(261, 72%, 63%);
 $spock-gradient : to top,
-hsl(189, 59%, 53%),
+$spock-colour,
 hsl(189, 58%, 57%);
 
 $item-size-mode0: min(25vw, 15vh);
 $item-size-mode1: min(20vw, 12vh);
-$item-size-selected : min(30vw, 18vh);
+$item-size-selected : min(24vw, 18vh);
