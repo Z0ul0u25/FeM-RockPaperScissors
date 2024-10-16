@@ -1,6 +1,7 @@
 "use strict";
 let gameData = null;
 
+let imgHead = null;
 let divBoard = null;
 let divScores = null;
 let divResult = null;
@@ -196,6 +197,7 @@ function swapMode() {
 
 			svgRuleSprite.setAttribute("viewBox", "0 0 304 270");
 			svgRuleSprite.children[0].setAttribute("href", "./images/rules-sprites.svg#mode0");
+			imgHead.src = "./images/logo.svg";
 		} else {
 			addItem("spock", true);
 			addItem("lizard", true);
@@ -203,6 +205,7 @@ function swapMode() {
 
 			svgRuleSprite.setAttribute("viewBox", "0 0 340 330");
 			svgRuleSprite.children[0].setAttribute("href", "./images/rules-sprites.svg#mode1");
+			imgHead.src = "./images/logo-bonus.svg";
 		}
 
 		main.classList.add("mode" + gameData.mode);
@@ -242,6 +245,8 @@ function resetScore() {
  */
 function init() {
 	gameData = JSON.parse(localStorage.getItem('gameData'));
+
+	imgHead = document.querySelector("header>img");
 	divBoard = document.getElementById("board");
 	divResult = document.getElementById("result");
 	divScores = document.getElementById("score");
