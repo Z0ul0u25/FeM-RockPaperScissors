@@ -258,9 +258,9 @@ function init() {
 		gameData.score = [0, 0];
 		updateGameData();
 	} else {
-		resetBoard();
 		updateScoreboard();
 	}
+	resetBoard();
 
 	let control = document.getElementById("control");
 	control.children[0].addEventListener("click", swapMode, false);
