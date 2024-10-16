@@ -139,6 +139,8 @@ function play(e) {
 
 	updateScoreboard();
 
+
+
 	setTimeout(resetBoard, 1000);
 }
 
@@ -154,29 +156,31 @@ function removeItem(itemName) {
  * Swap between game mode
  */
 function swapMode() {
-	main.classList.remove("mode" + gameData.mode);
+	if (board.classList.contains("select")) {
+		main.classList.remove("mode" + gameData.mode);
 
-	// Loop gamemode to 0 if was at 1
-	gameData.mode = ++gameData.mode % 2;
+		// Loop gamemode to 0 if was at 1
+		gameData.mode = ++gameData.mode % 2;
 
-	if (gameData.mode == 0) {
-		removeItem("spock");
-		removeItem("lizard");
-		modeSpan.innerHTML = "Normal";
+		if (gameData.mode == 0) {
+			removeItem("spock");
+			removeItem("lizard");
+			modeSpan.innerHTML = "Normal";
 
-		ruleSprite.setAttribute("viewBox", "0 0 304 270");
-		ruleSprite.children[0].setAttribute("href", "./images/rules-sprites.svg#mode0");
-	} else {
-		addItem("spock", true);
-		addItem("lizard", true);
-		modeSpan.innerHTML = "Special";
+			ruleSprite.setAttribute("viewBox", "0 0 304 270");
+			ruleSprite.children[0].setAttribute("href", "./images/rules-sprites.svg#mode0");
+		} else {
+			addItem("spock", true);
+			addItem("lizard", true);
+			modeSpan.innerHTML = "Special";
 
-		ruleSprite.setAttribute("viewBox", "0 0 340 330");
-		ruleSprite.children[0].setAttribute("href", "./images/rules-sprites.svg#mode1");
+			ruleSprite.setAttribute("viewBox", "0 0 340 330");
+			ruleSprite.children[0].setAttribute("href", "./images/rules-sprites.svg#mode1");
+		}
+
+		main.classList.add("mode" + gameData.mode);
+		updateGameData();
 	}
-
-	main.classList.add("mode" + gameData.mode);
-	updateGameData();
 }
 
 /**
