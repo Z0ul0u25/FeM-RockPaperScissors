@@ -263,6 +263,9 @@ function init() {
 		gameData.score = [0, 0];
 		updateGameData();
 	} else {
+		if (gameData.mode == 1) {
+			imgHead.src = "./images/logo-bonus.svg";
+		}
 		updateScoreboard();
 	}
 	resetBoard();
