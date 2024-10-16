@@ -91,10 +91,6 @@ function play(e) {
 	let cpuChoice = Math.floor(Math.random() * ((gameData.mode == 0) ? 3 : 5));
 	let result = ruleSet[playerChoice][cpuChoice];
 
-	console.log("You", playerChoice, itemOptions[playerChoice]);
-	console.log("computer", cpuChoice, itemOptions[cpuChoice]);
-	console.log("Outcome", result);
-
 	e.currentTarget.removeEventListener("click", play);
 	e.currentTarget.classList.remove("playable");
 
@@ -174,7 +170,6 @@ function showRules() {
  * uncheck hidden box to close rules
  */
 function closeRules() {
-	console.log("close rules");
 	rulesCheck.checked = false;
 	showRules();
 }
