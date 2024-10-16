@@ -78,7 +78,7 @@ function addItem(itemName, canClick) {
  */
 function resetBoard() {
 
-	while(board.children.length > 1){
+	while(board.children.length > 0){
 		board.children[0].remove();
 	}
 
