@@ -103,7 +103,7 @@ main {
 	.item {
 		position: absolute;
 
-		&.playable:hover{
+		&.playable:hover, &.playable:focus{
 			transform: scale(110%);
 			cursor: pointer;
 		}

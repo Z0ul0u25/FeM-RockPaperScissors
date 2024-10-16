@@ -66,7 +66,9 @@ function addItem(itemName, canClick) {
 
 	if (canClick) {
 		item.addEventListener("click", play, false);
+		item.addEventListener("keypress", play, false);
 		item.classList.add("playable");
+		item.tabIndex = board.children.length + 1;
 	}
 
 	item.appendChild(document.createElement("div"));
@@ -89,8 +91,8 @@ function resetBoard() {
 	addItem("scissors", true);
 
 	if (gameData.mode == 1) {
-		addItem("lizard", true);
 		addItem("spock", true);
+		addItem("lizard", true);
 
 		ruleSprite.setAttribute("viewBox", "0 0 340 330");
 		ruleSprite.children[0].setAttribute("href", "./images/rules-sprites.svg#mode1");
@@ -104,8 +106,13 @@ function resetBoard() {
 /**
  * Game Loop Logic
  * @param {Event} e Event
+ * @returns null when keyboard event is not valid
  */
 function play(e) {
+	if (e.type == "keypress" && e.code != "Enter") {
+		return null;
+	}
+
 	let playerChoice = itemOptions.indexOf(e.currentTarget.data);
 	let cpuChoice = Math.floor(Math.random() * ((gameData.mode == 0) ? 3 : 5));
 	let result = ruleSet[playerChoice][cpuChoice];
