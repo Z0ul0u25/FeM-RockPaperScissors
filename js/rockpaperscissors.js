@@ -11,6 +11,23 @@ let main = null;
 let modeSpan = null;
 
 const itemOptions = ["rock", "paper", "scissors", "lizard", "spock"];
+/**
+ * Rule set representation:
+ * [playerChoice][cpuChoice]
+ * [0] => rock
+ * [1] => paper
+ * [2] => scissors
+ * [3] => lizard
+ * [4] => spock
+ *
+ * So the value at [2][4] is the result of the player choosing 'scissors' and the
+ * cpu choosing 'spock'. spock beats scissors, cpu win, output is -1
+ *
+ * Value:
+ * 1 => player win
+ * 0 => tie
+ * -1 => cpu win
+ */
 const ruleSet = [
 	[0, -1, 1, 1, -1],
 	[1, 0, -1, -1, 1],
@@ -46,11 +63,13 @@ function addItem(itemName, canClick) {
 	item.classList.add("item");
 	item.classList.add(itemName);
 	item.data = itemName;
-	item.appendChild(document.createElement("div"));
+
 	if (canClick) {
 		item.addEventListener("click", play, false);
 		item.classList.add("playable");
 	}
+
+	item.appendChild(document.createElement("div"));
 	board.appendChild(item);
 }
 
@@ -137,6 +156,7 @@ function removeItem(itemName) {
 function swapMode() {
 	main.classList.remove("mode" + gameData.mode);
 
+	// Loop gamemode to 0 if was at 1
 	gameData.mode = ++gameData.mode % 2;
 
 	if (gameData.mode == 0) {
