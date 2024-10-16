@@ -36,31 +36,67 @@ function updateScoreboard() {
 	}
 }
 
-
 /**
  * Add an item to the screen
  * @param {String} itemName Name of the item to add
+ * @param {Boolean} canClick If item can is clickable to play
  */
-function addItem(itemName) {
+function addItem(itemName, canClick) {
 	let item = document.createElement("div");
 	item.classList.add("item");
 	item.classList.add(itemName);
 	item.data = itemName;
 	item.appendChild(document.createElement("div"));
-	item.addEventListener("click", play, false);
+	if (canClick) {
+		item.addEventListener("click", play, false);
+		item.classList.add("playable");
+	}
 	board.appendChild(item);
 }
 
 /**
- * TODO gameLoop
+ * Reset the board after a play
+ */
+function resetBoard() {
+
+	while(board.children.length > 1){
+		board.children[0].remove();
+	}
+
+	board.classList="select";
+
+	addItem("rock", true);
+	addItem("paper", true);
+	addItem("scissors", true);
+
+	if (gameData.mode == 1) {
+		addItem("lizard", true);
+		addItem("spock", true);
+
+		ruleSprite.setAttribute("viewBox", "0 0 340 330");
+		ruleSprite.children[0].setAttribute("href", "./images/rules-sprites.svg#mode1");
+
+		modeSpan.innerHTML = "Special";
+		main.classList.remove("mode0");
+		main.classList.add("mode1");
+	}
+}
+
+/**
+ * Game Loop Logic
+ * @param {Event} e Event
  */
 function play(e) {
 	let playerChoice = itemOptions.indexOf(e.currentTarget.data);
 	let cpuChoice = Math.floor(Math.random() * ((gameData.mode == 0) ? 3 : 5));
 	let result = ruleSet[playerChoice][cpuChoice];
+
 	console.log("You", playerChoice, itemOptions[playerChoice]);
 	console.log("computer", cpuChoice, itemOptions[cpuChoice]);
 	console.log("Outcome", result);
+
+	e.currentTarget.removeEventListener("click", play);
+	e.currentTarget.classList.remove("playable");
 
 	let boardItems = board.children;
 	while (boardItems.length != 1) {
@@ -76,9 +112,9 @@ function play(e) {
 		}
 	}
 
-	board.classList="result";
+	board.classList = "result";
 
-	addItem(itemOptions[cpuChoice]);
+	addItem(itemOptions[cpuChoice], false);
 
 	if (result == 1) {
 		gameData.score[0]++;
@@ -87,6 +123,8 @@ function play(e) {
 	}
 
 	updateScoreboard();
+
+	setTimeout(resetBoard, 1000);
 }
 
 /**
@@ -113,8 +151,8 @@ function swapMode() {
 		ruleSprite.setAttribute("viewBox", "0 0 304 270");
 		ruleSprite.children[0].setAttribute("href", "./images/rules-sprites.svg#mode0");
 	} else {
-		addItem("spock");
-		addItem("lizard");
+		addItem("spock", true);
+		addItem("lizard", true);
 		modeSpan.innerHTML = "Special";
 
 		ruleSprite.setAttribute("viewBox", "0 0 340 330");
@@ -167,29 +205,13 @@ function init() {
 	main = document.getElementsByTagName("main")[0];
 	modeSpan = document.getElementById("mode");
 
-	addItem("rock");
-	addItem("paper");
-	addItem("scissors");
-
 	if (gameData == null) {
 		gameData = {};
 		gameData.mode = 0;
 		gameData.score = [0, 0];
 		updateGameData();
 	} else {
-
-		if (gameData.mode == 1) {
-			addItem("lizard");
-			addItem("spock");
-
-			ruleSprite.setAttribute("viewBox", "0 0 340 330");
-			ruleSprite.children[0].setAttribute("href", "./images/rules-sprites.svg#mode1");
-
-			modeSpan.innerHTML = "Special";
-			main.classList.remove("mode0");
-			main.classList.add("mode1");
-		}
-
+		resetBoard();
 		updateScoreboard();
 	}
 

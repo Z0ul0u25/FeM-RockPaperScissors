@@ -102,6 +102,11 @@ main {
 
 	.item {
 		position: absolute;
+
+		&.playable:hover{
+			transform: scale(110%);
+			cursor: pointer;
+		}
 	}
 }
 
@@ -227,10 +232,6 @@ footer {
 
 	border-radius: 50%;
 	padding      : min(4vw, 15px);
-
-	&:hover {
-		cursor: pointer;
-	}
 
 	div {
 		max-width: 120px;
